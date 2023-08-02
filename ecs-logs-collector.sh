@@ -159,10 +159,9 @@ init() {
 
 collect_brief() {
   init
-  is_diskfull
   get_common_logs
   get_kernel_logs
-  get_mounts_info
+  get_amazon_logs
   get_selinux_info
   get_iptables_info
   get_pkglist
@@ -227,6 +226,27 @@ get_lsmod_info() {
     mkdir -p "$info_system"
     lsmod > "$info_system"/lsmod.txt
   fi
+
+  ok
+}
+
+get_amazon_logs() {
+  try "collect Amazon log directory"
+
+  dstdir="${info_system}/amazon_logs"
+
+  if [ ! -d /var/log/amazon ]; then
+    failed "amazon log directory does not exist"
+    return 1
+  fi
+
+  mkdir -p "$dstdir"
+
+  cp -f -r /var/log/amazon/* "$dstdir"/
+
+  # add permission for all users to read the files grabbed from /var/log/amazon.
+  find "$dstdir" -type d -exec chmod 755 {} +
+  find "$dstdir" -type f -exec chmod 644 {} +
 
   ok
 }
