@@ -1,3 +1,7 @@
+#### This is a Fork from the official [AWS ECS Log Collector repository](https://github.com/aws/amazon-ecs-logs-collector).
+#### The only modification is to have the /var/log/amazon directory being collected and removing the collection of disk
+#### It is useful for EFS mount issues that is making df command hanging forever
+
 # ECS Logs Collector
 
 This project was created to collect [Amazon ECS](https://aws.amazon.com/ecs) log files and Operating System log files for troubleshooting Amazon ECS customer support cases.
